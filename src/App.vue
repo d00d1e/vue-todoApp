@@ -3,20 +3,18 @@
     <img class="logo" alt="Vue logo" src="./assets/logo.png">
     <div class="todo-list">
       <input type="text" class="todo-input" v-model="currentTodo" @keydown.enter="addTodo()" placeholder="Create a new to-do">
-
-      <div class="todo-item-list">
-        
         <li class="todo-item" v-for="todo in todos" :key="todo.id">
-          <input type="checkbox" v-model="todo.done" autofocus>
-          <del v-if="todo.done">{{ todo.label }}</del>
-          <span v-else>{{ todo.label }}</span>
-
+          <div class="edit" v-if="todo.edit">
+            <input type="text" class="todo-input" v-model="todo.label" @keydown.enter="saveEdit(todo)">
+          </div>
+          <div class="view" v-else>
+            <input type="checkbox" v-model="todo.completed" autofocus>
+            &nbsp; 
+            <del v-if="todo.completed" >{{ todo.label }}</del>
+            <span v-else @dblclick="editTodo(todo)">{{ todo.label }}</span>
+          </div>
           <button class="delete-button" @click="removeTodo(todo)">&times;</button>
-        
         </li>
-
-      </div> 
-        
     </div>
   </div>
 </template>
@@ -26,12 +24,12 @@
     data() {
       return {
         todos: [
-          { id: 0, label: 'Feed the cat', done: true},
-          { id: 1, label: 'Do laundry', done: false},
-          { id: 2, label: 'Finish Vue.js', done: false}
+          { id: 0, label: 'Feed the cat', completed: true, edit: false},
+          { id: 1, label: 'Do laundry', completed: false, edit: false},
+          { id: 2, label: 'Finish Vue.js Todo App', completed: false, edit: false}
         ],
-        currentTodo: '', 
-        editing: null
+        currentTodo: '',
+        editing: false
       };
     },
     methods: {
@@ -39,11 +37,20 @@
         if(this.currentTodo.trim().length === 0) {
           return
         }
-        this.todos.push({id: this.todos.length, label: this.currentTodo, done: false});
+        this.todos.push({id: this.todos.length, label: this.currentTodo, completed: false, edit: false});
         this.currentTodo='';
       },
       completeTodo(todo) {
-        todo.done = !todo.done;
+        todo.completed = !todo.completed;
+      },
+      editTodo(todo) {
+        var index = this.todos.indexOf(todo);
+        this.editedTodo = index;
+        this.todos[index].edit = true;
+      },
+      saveEdit(todo) {
+        var index = this.todos.indexOf(todo);
+        this.todos[index].edit = false;
       },
       removeTodo(todo) {
         var index = this.todos.indexOf(todo);
@@ -91,8 +98,8 @@
 
 .delete-button {
   cursor: pointer;
-  margin-left: 14px;
-  
+  margin-left: 14px; 
+  text-align: right;
 }
 
 </style>
