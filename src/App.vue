@@ -1,11 +1,11 @@
 <template>
-  <div id="app-container">
+  <div id="app">
     <img class="logo" alt="Vue logo" src="./assets/logo.png">
     <div class="todo-list">
       <input type="text" class="todo-input" v-model="currentTodo" @keydown.enter="addTodo()" placeholder="Create a new to-do">
         <li class="todo-item" v-for="todo in todos" :key="todo.id">
           <div class="edit" v-if="todo.edit">
-            <input type="text" class="todo-input" v-model="todo.label" @keydown.enter="saveEdit(todo)">
+            <input type="text" class="edit-input" v-model="todo.label" @keydown.enter="saveEdit(todo)">
           </div>
           <div class="view" v-else>
             <input type="checkbox" v-model="todo.completed" autofocus>
@@ -13,7 +13,7 @@
             <del v-if="todo.completed" >{{ todo.label }}</del>
             <span v-else @dblclick="editTodo(todo)">{{ todo.label }}</span>
           </div>
-          <button class="delete-button" @click="removeTodo(todo)">&times;</button>
+          <div class="delete-button" @click="removeTodo(todo)">&times;</div>
         </li>
     </div>
   </div>
@@ -65,8 +65,8 @@
   box-sizing: border-box;
 }
 
-#app-container {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+#app {
+  font-family: 'Roboto Mono', monospace, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -82,11 +82,20 @@
   height: 75px;
 }
 
+.edit-input {
+  width: 300%;
+  padding: 10px 10px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  font-family: 'Roboto Mono', monospace;
+}
+
 .todo-input {
   width: 100%;
   padding: 10px 10px;
   font-size: 18px;
   margin-bottom: 16px;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .todo-item {
