@@ -1,35 +1,28 @@
 <template>
   <div id="app">
-
       <img id="logo" alt="Vue logo" src="./assets/logo.png">
-       
       <div class="todo-list">
         <md-field>
           <md-input class="todo-input" v-model="currentTodo" @keydown.enter="addTodo()" placeholder="Create a new to-do"></md-input>
         </md-field>
-
         <md-list class="todo-item">
           <li v-for="todo in todos" :key="todo.id">
           <md-card class="card">
-            
             <div class="edit" v-if="todo.edit">
               <md-field>
                 <md-input class="edit-input" v-model="todo.label" @keydown.enter="saveEdit(todo)"></md-input>
               </md-field>
             </div>
-
             <div class="view" v-else>
               <md-checkbox v-model="todo.completed" autofocus></md-checkbox>
               <del v-if="todo.completed" >{{ todo.label }}</del>
               <span v-else @dblclick="editTodo(todo)">{{ todo.label }}</span>
             </div>
-
             <md-button class="delete-button" @click="removeTodo(todo)">&times;</md-button>
           </md-card>
           </li>
         </md-list>
       </div>
-  
   </div>
 </template>
 
