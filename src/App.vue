@@ -1,21 +1,35 @@
 <template>
   <div id="app">
-    <img class="logo" alt="Vue logo" src="./assets/logo.png">
-    <div class="todo-list">
-      <input type="text" class="todo-input" v-model="currentTodo" @keydown.enter="addTodo()" placeholder="Create a new to-do">
-        <li class="todo-item" v-for="todo in todos" :key="todo.id">
-          <div class="edit" v-if="todo.edit">
-            <input type="text" class="edit-input" v-model="todo.label" @keydown.enter="saveEdit(todo)">
-          </div>
-          <div class="view" v-else>
-            <input type="checkbox" v-model="todo.completed" autofocus>
-            &nbsp; 
-            <del v-if="todo.completed" >{{ todo.label }}</del>
-            <span v-else @dblclick="editTodo(todo)">{{ todo.label }}</span>
-          </div>
-          <div class="delete-button" @click="removeTodo(todo)">&times;</div>
-        </li>
-    </div>
+
+      <img id="logo" alt="Vue logo" src="./assets/logo.png">
+       
+      <div class="todo-list">
+        <md-field>
+          <md-input class="todo-input" v-model="currentTodo" @keydown.enter="addTodo()" placeholder="Create a new to-do"></md-input>
+        </md-field>
+
+        <md-list class="todo-item">
+          <li v-for="todo in todos" :key="todo.id">
+          <md-card class="card">
+            
+            <div class="edit" v-if="todo.edit">
+              <md-field>
+                <md-input class="edit-input" v-model="todo.label" @keydown.enter="saveEdit(todo)"></md-input>
+              </md-field>
+            </div>
+
+            <div class="view" v-else>
+              <md-checkbox v-model="todo.completed" autofocus></md-checkbox>
+              <del v-if="todo.completed" >{{ todo.label }}</del>
+              <span v-else @dblclick="editTodo(todo)">{{ todo.label }}</span>
+            </div>
+
+            <md-button class="delete-button" @click="removeTodo(todo)">&times;</md-button>
+          </md-card>
+          </li>
+        </md-list>
+      </div>
+  
   </div>
 </template>
 
@@ -24,8 +38,8 @@
     data() {
       return {
         todos: [
-          { id: 0, label: 'Feed the cat', completed: true, edit: false},
-          { id: 1, label: 'Do laundry', completed: false, edit: false},
+          { id: 0, label: 'Eat', completed: true, edit: false},
+          { id: 1, label: 'Sleep', completed: false, edit: false},
           { id: 2, label: 'Finish Vue.js Todo App', completed: false, edit: false}
         ],
         currentTodo: '',
@@ -61,10 +75,6 @@
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
 #app {
   font-family: 'Roboto Mono', monospace, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -76,39 +86,21 @@
   margin: 0 auto;
 }
 
-.logo {
+#logo {
   display: block;
-  margin: 20px auto;
+  margin: 30px auto;
   height: 75px;
 }
 
 .edit-input {
-  width: 300%;
-  padding: 10px 10px;
-  font-size: 14px;
-  margin-bottom: 16px;
-  font-family: 'Roboto Mono', monospace;
+  width: 450px;
+  padding-left: 20px;
 }
 
-.todo-input {
+.card {
   width: 100%;
-  padding: 10px 10px;
-  font-size: 18px;
-  margin-bottom: 16px;
-  font-family: 'Roboto Mono', monospace;
-}
-
-.todo-item {
-  margin-bottom: 12px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  padding-left: 30px;
 }
-
-.delete-button {
-  cursor: pointer;
-  margin-left: 14px; 
-  text-align: right;
-}
-
 </style>
