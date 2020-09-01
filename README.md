@@ -1,4 +1,5 @@
 # vue-todo
+<img src="public/screenshot.png" width="300">
 
 ## Project setup
 ```
