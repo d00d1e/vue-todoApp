@@ -63,6 +63,18 @@
         var index = this.todos.indexOf(todo);
         this.todos.splice(index, 1);
       }
+    },
+    mounted() {
+      console.log('App mounted!');
+      if (localStorage.getItem('todos')) this.todos = JSON.parse(localStorage.getItem('todos'));
+    },
+    watch: {
+      todos: {
+        handler() {
+          localStorage.setItem('todos', JSON.stringify(this.todos));
+        },
+        deep: true,
+      },
     }
   };
 </script>
